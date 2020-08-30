@@ -1,39 +1,42 @@
 <template>
-  <div>
-    {{ contact.name }}<br />
-    {{ contact.number }}
+  <div v-if="currentContact.name">
+    {{ currentContact.name }}<br />
+    {{ currentContact.number }}
     <ul>
       <ContactField
-        v-for="field of contact.fields"
-        v-bind:key="field"
+        v-for="field of currentContact.fields"
+        :key="field.id"
         v-bind:field="field"
-        @remove-field="removeField"
       />
     </ul>
-    <AddField @add-field="addField" />
+    <AddField />
+  </div>
+  <div v-else>
+    No such contact!
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import AddField from "@/components/AddField";
 import ContactField from "@/components/ContactField";
 export default {
   name: "ContactInfo",
-  props: {
-    contact: {
-      type: Object,
-      required: true,
-    },
+  data() {
+    return {
+      currentContact: {},
+    };
   },
+  computed: mapGetters(["allContacts"]),
   methods: {
-    removeField(id) {
-      this.contact.fields = this.contact.fields.filter(
-        (item) => item.id !== id
+    showCurrentContact() {
+      this.currentContact = this.allContacts.find(
+        (item) => item.id === +this.$route.params.id
       );
     },
-    addField(field) {
-      this.contact.fields.push(field);
-    },
+  },
+  mounted() {
+    this.showCurrentContact();
   },
   components: {
     AddField,

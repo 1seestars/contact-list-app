@@ -1,10 +1,9 @@
 <template>
   <li>
     <span>
-      <router-link
-        :to="{ name: 'ContactInfo', params: { id: contact.id, contact } }"
-        >{{ contact.name }}</router-link
-      >
+      <router-link :to="{ name: 'ContactInfo', params: { id: contact.id } }">{{
+        contact.name
+      }}</router-link>
     </span>
     <button @click="() => removeContact(contact.id)">&times;</button>
   </li>

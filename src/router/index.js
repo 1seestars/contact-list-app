@@ -16,7 +16,6 @@ export default new Router({
       path: "/:id",
       name: "ContactInfo",
       component: () => import("../views/ContactInfo"),
-      props: true,
     },
   ],
 });

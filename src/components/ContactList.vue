@@ -1,23 +1,19 @@
 <template>
   <ul>
     <ContactItem
-      v-for="contact of contacts"
-      v-bind:key="contact"
+      v-for="contact of allContacts"
+      :key="contact.id"
       v-bind:contact="contact"
-      v-on:remove-contact="removeContact"
     />
   </ul>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import ContactItem from "@/components/ContactItem";
 export default {
-  props: ["contacts"],
-  methods: {
-    removeContact(id) {
-      this.$emit("remove-contact", id);
-    },
-  },
+  name: "ContactList",
+  computed: mapGetters(["allContacts"]),
   components: {
     ContactItem,
   },

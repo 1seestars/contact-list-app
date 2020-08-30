@@ -7,7 +7,7 @@
         v-for="field of contact.fields"
         v-bind:key="field"
         v-bind:field="field"
-        v-on:remove-field="removeField"
+        @remove-field="removeField"
       />
     </ul>
     <AddField @add-field="addField" />
@@ -18,6 +18,7 @@
 import AddField from "@/components/AddField";
 import ContactField from "@/components/ContactField";
 export default {
+  name: "ContactInfo",
   props: {
     contact: {
       type: Object,

@@ -2,33 +2,19 @@
   <div>
     <h2>Contact list</h2>
     <hr />
-    <AddContact @add-contact="addContact" />
-    <ContactList
-      v-if="contacts.length"
-      v-bind:contacts="contacts"
-      @remove-contact="removeContact"
-    />
+    <AddContact />
+    <ContactList v-if="contactsCount" />
     <p v-else>No contacts!</p>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import ContactList from "@/components/ContactList";
 import AddContact from "@/components/AddContact";
 export default {
-  data() {
-    return {
-      contacts: [],
-    };
-  },
-  methods: {
-    removeContact(id) {
-      this.contacts = this.contacts.filter((item) => item.id !== id);
-    },
-    addContact(contact) {
-      this.contacts.push(contact);
-    },
-  },
+  name: "Contacts",
+  computed: mapGetters(["contactsCount"]),
   components: {
     ContactList,
     AddContact,

@@ -1,12 +1,13 @@
 <template>
-  <form @submit.prevent="onSubmit">
-    <input type="text" v-model="name" />
-    <input type="number" v-model="number" />
+  <form @submit.prevent="submit">
+    <input type="text" placeholder="Name" v-model="name" />
+    <input type="number" placeholder="Number" v-model="number" />
     <button type="submit">Create</button>
   </form>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -15,18 +16,16 @@ export default {
     };
   },
   methods: {
-    onSubmit() {
+    ...mapMutations(["createContact"]),
+    submit() {
       if (this.name.trim() && this.number.trim()) {
-        const newContact = {
+        this.createContact({
           id: Date.now(),
           name: this.name,
           number: this.number,
-          fields: []
-        };
-
-        this.$emit("add-contact", newContact);
-        this.name = "";
-        this.number = "";
+          fields: [],
+        });
+        this.name = this.number = "";
       }
     },
   },

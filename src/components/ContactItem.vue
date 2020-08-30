@@ -6,11 +6,12 @@
         >{{ contact.name }}</router-link
       >
     </span>
-    <button v-on:click="$emit('remove-contact', contact.id)">&times;</button>
+    <button @click="() => removeContact(contact.id)">&times;</button>
   </li>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   props: {
     contact: {
@@ -18,7 +19,7 @@ export default {
       required: true,
     },
   },
-  components: {},
+  methods: mapMutations(["removeContact"]),
 };
 </script>
 

@@ -3,18 +3,33 @@
     <span>
       {{ field.title + " " + field.value }}
     </span>
-    <button v-on:click="$emit('remove-field', field.id)">&times;</button>
+    <button
+      @click="
+        () =>
+          removeField({
+            id: field.id,
+            parentId,
+          })
+      "
+    >
+      &times;
+    </button>
   </li>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   props: {
     field: {
       type: Object,
       required: true,
     },
+    parentId: {
+      type: Number,
+      required: true,
+    },
   },
-  components: {},
+  methods: mapMutations(["removeField"]),
 };
 </script>

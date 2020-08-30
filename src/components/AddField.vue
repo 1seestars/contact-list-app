@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onSubmit">
+  <form @submit.prevent="submit">
     <input type="text" v-model="title" />
     <input type="text" v-model="value" />
     <button type="submit">Add</button>
@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -14,18 +15,23 @@ export default {
       value: "",
     };
   },
+  props: {
+    id: {
+      type: Number,
+      required: true,
+    },
+  },
   methods: {
-    onSubmit() {
+    ...mapMutations(["createField"]),
+    submit() {
       if (this.title.trim() && this.value.trim()) {
-        const newField = {
+        this.createField({
           id: Date.now(),
           title: this.title,
           value: this.value,
-        };
-
-        this.$emit("add-field", newField);
-        this.title = "";
-        this.value = "";
+          parentId: this.id,
+        });
+        this.title = this.value = "";
       }
     },
   },

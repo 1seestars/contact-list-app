@@ -1,18 +1,19 @@
 <template>
-  <div v-if="currentContact.name">
-    {{ currentContact.name }}<br />
-    {{ currentContact.number }}
-    <ul>
-      <ContactField
-        v-for="field of currentContact.fields"
-        :key="field.id"
-        v-bind:field="field"
-      />
-    </ul>
-    <AddField />
-  </div>
-  <div v-else>
-    No such contact!
+  <div>
+    <div v-if="currentContact.name">
+      {{ currentContact.name }}<br />
+      {{ currentContact.number }}
+      <ul>
+        <ContactField
+          v-for="field of currentContact.fields"
+          :key="field.id"
+          v-bind:field="field"
+          v-bind:parentId="currentContact.id"
+        />
+      </ul>
+      <AddField v-bind:id="+this.$route.params.id" />
+    </div>
+    <div v-else>No such contact!</div>
   </div>
 </template>
 

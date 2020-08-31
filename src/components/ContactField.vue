@@ -3,15 +3,10 @@
     <span>
       {{ field.title + " " + field.value }}
     </span>
-    <button
-      @click="
-        () =>
-          removeField({
-            id: field.id,
-            parentId,
-          })
-      "
-    >
+    <button @click="() => getField({ id: field.id, parentId })">
+      Change
+    </button>
+    <button @click="() => removeField({ id: field.id, parentId })">
       &times;
     </button>
   </li>
@@ -30,6 +25,6 @@ export default {
       required: true,
     },
   },
-  methods: mapMutations(["removeField"]),
+  methods: mapMutations(["removeField", "getField"]),
 };
 </script>

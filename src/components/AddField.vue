@@ -2,17 +2,18 @@
   <form @submit.prevent="submit">
     <input type="text" v-model="title" />
     <input type="text" v-model="value" />
-    <button type="submit">Add</button>
+    <button type="submit">{{ buttonValue }}</button>
   </form>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   data() {
     return {
       title: "",
       value: "",
+      buttonValue: "Add",
     };
   },
   props: {
@@ -21,10 +22,29 @@ export default {
       required: true,
     },
   },
+  watch: {
+    currentChangeField() {
+      this.title = this.currentChangeField.title;
+      this.value = this.currentChangeField.value;
+      if (this.currentChangeField.title) {
+        this.buttonValue = "Change";
+      } else {
+        this.buttonValue = "Add";
+      }
+    },
+  },
+  computed: mapGetters(["currentChangeField"]),
   methods: {
-    ...mapMutations(["createField"]),
+    ...mapMutations(["createField", "changeField"]),
     submit() {
-      if (this.title.trim() && this.value.trim()) {
+      if (this.currentChangeField.title) {
+        this.changeField({
+          id: this.currentChangeField.id,
+          title: this.title,
+          value: this.value,
+          parentId: this.currentChangeField.parentId,
+        });
+      } else if (this.title.trim() && this.value.trim()) {
         this.createField({
           id: Date.now(),
           title: this.title,

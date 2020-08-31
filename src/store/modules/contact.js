@@ -27,9 +27,9 @@ export default {
       const contactIndex = state.contacts.findIndex(
         (item) => item.id === parentId
       );
-      state.currentChangeField = state.contacts[contactIndex].fields.filter(
+      state.currentChangeField = state.contacts[contactIndex].fields.find(
         (item) => item.id === id
-      )[0];
+      );
     },
     changeField(state, changedField) {
       const contactIndex = state.contacts.findIndex(

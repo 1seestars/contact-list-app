@@ -40,12 +40,22 @@ export default {
         (item) => item.id === changedField.id
       );
 
-      state.contacts[contactIndex].fields[fieldIndex] = changedField;
-
       state.currentChangeField = {
         title: "",
         value: "",
       };
+
+      if (
+        state.contacts[contactIndex].fields[fieldIndex].title !==
+          changedField.title ||
+        state.contacts[contactIndex].fields[fieldIndex].value !==
+          changedField.value
+      ) {
+        if (confirm("Do you really want to change this field?")) {
+          state.contacts[contactIndex].fields[fieldIndex] = changedField;
+          state.fields = [changedField];
+        }
+      }
     },
   },
   state: {
@@ -54,6 +64,7 @@ export default {
       title: "",
       value: "",
     },
+    fields: [],
   },
   getters: {
     allContacts(state) {
@@ -64,6 +75,9 @@ export default {
     },
     currentChangeField(state) {
       return state.currentChangeField;
+    },
+    currentFields(state) {
+      return state.fields;
     },
   },
 };

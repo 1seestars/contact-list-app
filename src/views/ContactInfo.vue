@@ -26,14 +26,24 @@ export default {
   data() {
     return {
       currentContact: {},
+      showCurrentFields: [],
     };
   },
-  computed: mapGetters(["allContacts"]),
+  watch: {
+    currentFields() {
+      this.$forceUpdate();
+    },
+  },
+  computed: mapGetters(["allContacts", "currentFields"]),
   methods: {
     showCurrentContact() {
       this.currentContact = this.allContacts.find(
         (item) => item.id === +this.$route.params.id
       );
+
+      this.showCurrentFields = this.allContacts.find(
+        (item) => item.id === +this.$route.params.id
+      ).fields;
     },
   },
   mounted() {

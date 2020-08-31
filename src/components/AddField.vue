@@ -37,7 +37,11 @@ export default {
   methods: {
     ...mapMutations(["createField", "changeField"]),
     submit() {
-      if (this.currentChangeField.title) {
+      if (
+        this.currentChangeField.title &&
+        this.title.trim() &&
+        this.value.trim()
+      ) {
         this.changeField({
           id: this.currentChangeField.id,
           title: this.title,

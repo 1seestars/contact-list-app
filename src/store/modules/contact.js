@@ -22,6 +22,8 @@ export default {
       state.contacts[contactIndex].fields = state.contacts[
         contactIndex
       ].fields.filter((item) => item.id !== id);
+
+      this.commit("setCurrentContactFields", parentId);
     },
     getField(state, { id, parentId }) {
       const contactIndex = state.contacts.findIndex(
@@ -53,9 +55,19 @@ export default {
       ) {
         if (confirm("Do you really want to change this field?")) {
           state.contacts[contactIndex].fields[fieldIndex] = changedField;
-          state.fields = [changedField];
+          this.commit("setCurrentContactFields", changedField.parentId);
         }
       }
+    },
+    setCurrentContactFields(state, id) {
+      const contact = state.contacts.find((item) => item.id === id);
+      state.currentContactHistory = [
+        ...state.currentContactHistory,
+        contact.fields,
+      ];
+    },
+    clearHistory(state) {
+      state.currentContactHistory = [];
     },
   },
   state: {
@@ -65,6 +77,7 @@ export default {
       value: "",
     },
     fields: [],
+    currentContactHistory: [],
   },
   getters: {
     allContacts(state) {
@@ -78,6 +91,9 @@ export default {
     },
     currentFields(state) {
       return state.fields;
+    },
+    getCurrentContactHistory(state) {
+      return state.currentContactHistory;
     },
   },
 };

@@ -1,7 +1,7 @@
 <template>
   <ul>
     <ContactItem
-      v-for="contact of allContacts"
+      v-for="contact of getAllContacts"
       :key="contact.id"
       v-bind:contact="contact"
     />
@@ -10,10 +10,10 @@
 
 <script>
 import { mapGetters } from "vuex";
-import ContactItem from "@/components/ContactItem";
+import ContactItem from "@/components/contacts/ContactItem";
 export default {
   name: "ContactList",
-  computed: mapGetters(["allContacts"]),
+  computed: mapGetters(["getAllContacts"]),
   components: {
     ContactItem,
   },

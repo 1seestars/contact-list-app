@@ -2,17 +2,23 @@
   <div>
     <li>
       <div id="imageContainer">
-        <div id="imageDiv">{{ contact.name.toString()[0].toUpperCase() }}</div>
+        <router-link :to="{ name: 'ContactInfo', params: { id: contact.id } }">
+          <div id="imageDiv">
+            <span>{{ capitalLetter }}</span>
+          </div>
+        </router-link>
       </div>
-      <span>
-        <router-link :to="{ name: 'ContactInfo', params: { id: contact.id } }"
-          ><span>{{
-            contact.name[0].toUpperCase() + contact.name.slice(1)
-          }}</span></router-link
+      <div id="shortInfo">
+        <router-link
+          :to="{ name: 'ContactInfo', params: { id: contact.id } }"
+          id="link"
         >
-      </span>
+          <span id="contactName">{{ name }}</span>
+          <span id="contactNumber">{{ number }}</span>
+        </router-link>
+      </div>
       <div id="buttonContainer">
-        <button @click="() => removeContact(contact.id)">DELETE</button>
+        <button @click="removeCurrentContact">Delete</button>
       </div>
     </li>
     <hr />
@@ -28,7 +34,25 @@ export default {
       required: true,
     },
   },
-  methods: mapMutations(["removeContact"]),
+  computed: {
+    name() {
+      return this.contact.name[0].toUpperCase() + this.contact.name.slice(1);
+    },
+    number() {
+      return this.contact.number;
+    },
+    capitalLetter() {
+      return this.contact.name.toString()[0].toUpperCase();
+    },
+  },
+  methods: {
+    ...mapMutations(["removeContact"]),
+    removeCurrentContact() {
+      if (confirm("Are you shure?")) {
+        this.removeContact(this.contact.id);
+      }
+    },
+  },
 };
 </script>
 
@@ -43,13 +67,6 @@ li span {
   display: inline-block;
   flex: 1;
   text-align: left;
-  line-height: 100px;
-}
-
-li span span {
-  font-size: 20px;
-  color: #666666;
-  text-decoration: none;
 }
 
 li span span:hover {
@@ -71,6 +88,10 @@ li span span:hover {
   border-radius: 50%;
   opacity: 0.5;
   color: #0084c1;
+}
+
+#imageDiv {
+  text-decoration: none;
 }
 
 #buttonContainer {
@@ -112,5 +133,32 @@ li span span:hover {
 hr {
   opacity: 0.3;
   margin: 0 3vw;
+}
+
+li:hover {
+  background: rgb(236, 236, 236);
+}
+
+#shortInfo {
+  display: flex;
+  align-items: center;
+}
+
+#shortInfo span {
+  display: block;
+}
+
+#contactName {
+  font-size: 20px;
+  color: #666666;
+}
+
+#contactNumber {
+  color: #999999;
+  font-style: italic;
+}
+
+#link {
+  text-decoration: none;
 }
 </style>

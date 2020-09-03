@@ -1,96 +1,98 @@
 export default {
   actions: {},
   mutations: {
-    createContact(state, newContact) {
+    createNewContact(state, newContact) {
       state.contacts.push(newContact);
     },
-    createField(state, newField) {
+    removeContact(state, id) {
+      state.contacts = state.contacts.filter((item) => item.id !== id);
+    },
+    createNewField(state, newField) {
       const contactIndex = state.contacts.findIndex(
         (item) => item.id === newField.parentId
       );
-      state.contacts[contactIndex].fields.push(newField);
+
+      const fields = state.contacts[contactIndex].fields;
+
+      fields.push(newField);
+
+      this.commit("setContactFieldsToHistory", fields);
     },
-    removeContact(state, id) {
-      confirm("Are you shure?")
-        ? (state.contacts = state.contacts.filter((item) => item.id !== id))
-        : null;
-    },
-    removeField(state, { id, parentId }) {
+    removeField(state, { fieldId, parentId }) {
       const contactIndex = state.contacts.findIndex(
         (item) => item.id === parentId
       );
+
       state.contacts[contactIndex].fields = state.contacts[
         contactIndex
-      ].fields.filter((item) => item.id !== id);
+      ].fields.filter((item) => item.id !== fieldId);
 
-      this.commit("setCurrentContactFields", parentId);
+      this.commit(
+        "setContactFieldsToHistory",
+        state.contacts[contactIndex].fields
+      );
+
+      this.commit("clearFieldToChange");
     },
-    getField(state, { id, parentId }) {
+    setFieldToChange(state, { fieldId, parentId }) {
       const contactIndex = state.contacts.findIndex(
         (item) => item.id === parentId
       );
+
       state.currentChangeField = state.contacts[contactIndex].fields.find(
-        (item) => item.id === id
+        (item) => item.id === fieldId
       );
     },
-    changeField(state, changedField) {
+    clearFieldToChange(state) {
+      state.currentChangeField = {};
+    },
+    changeField(state, { changedField, contactIndex, fieldIndex }) {
+      state.contacts[contactIndex].fields[fieldIndex] = { ...changedField };
+
+      this.commit(
+        "setContactFieldsToHistory",
+        state.contacts[contactIndex].fields
+      );
+    },
+    cancelLastAction(state, parentId) {
+      const history = state.currentContactHistory;
+
+      history.pop();
+
       const contactIndex = state.contacts.findIndex(
-        (item) => item.id === changedField.parentId
+        (item) => item.id === parentId
       );
 
-      const fieldIndex = state.contacts[contactIndex].fields.findIndex(
-        (item) => item.id === changedField.id
-      );
-
-      state.currentChangeField = {
-        title: "",
-        value: "",
-      };
-
-      if (
-        state.contacts[contactIndex].fields[fieldIndex].title !==
-          changedField.title ||
-        state.contacts[contactIndex].fields[fieldIndex].value !==
-          changedField.value
-      ) {
-        if (confirm("Do you really want to change this field?")) {
-          state.contacts[contactIndex].fields[fieldIndex] = changedField;
-          this.commit("setCurrentContactFields", changedField.parentId);
-        }
-      }
+      state.contacts[contactIndex].fields = history[history.length - 1];
     },
-    setCurrentContactFields(state, id) {
-      const contact = state.contacts.find((item) => item.id === id);
+    setContactFieldsToHistory(state, fields) {
       state.currentContactHistory = [
         ...state.currentContactHistory,
-        contact.fields,
+        [...fields],
       ];
     },
-    clearHistory(state) {
-      state.currentContactHistory = [];
+    inititalizeHistory(state, parentId) {
+      const contactIndex = state.contacts.findIndex(
+        (item) => item.id === parentId
+      );
+
+      state.currentContactHistory = [[...state.contacts[contactIndex].fields]];
     },
   },
   state: {
     contacts: [],
-    currentChangeField: {
-      title: "",
-      value: "",
-    },
-    fields: [],
+    currentChangeField: {},
     currentContactHistory: [],
   },
   getters: {
-    allContacts(state) {
+    getAllContacts(state) {
       return state.contacts;
     },
     contactsCount(state) {
       return state.contacts.length;
     },
-    currentChangeField(state) {
+    getCurrentChangeField(state) {
       return state.currentChangeField;
-    },
-    currentFields(state) {
-      return state.fields;
     },
     getCurrentContactHistory(state) {
       return state.currentContactHistory;

@@ -1,12 +1,13 @@
 <template>
   <form @submit.prevent="submit">
-    <input type="text" placeholder="Name" v-model="name" />
-    <input type="number" placeholder="Number" v-model="number" />
+    <input type="text" placeholder="Name" v-model="name" required />
+    <input type="number" placeholder="Number" v-model="number" required />
     <button type="submit">Create</button>
   </form>
 </template>
 
 <script>
+const uniqid = require("uniqid");
 import { mapMutations } from "vuex";
 export default {
   data() {
@@ -16,16 +17,17 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["createContact"]),
+    ...mapMutations(["createNewContact"]),
     submit() {
       if (this.name.trim() && this.number.trim()) {
-        this.createContact({
-          id: Date.now(),
-          name: this.name,
-          number: this.number,
+        this.createNewContact({
+          id: uniqid(),
+          name: this.name.trim(),
+          number: this.number.trim(),
           fields: [],
         });
-        this.name = this.number = "";
+        this.name = "";
+        this.number = "";
       }
     },
   },
@@ -64,7 +66,7 @@ button {
   box-shadow: 5px 10px 10px 0px rgba(159, 201, 215, 0.7);
   transition: 0.5s;
   outline: none;
-  opacity: 0.7;
+  opacity: 0.85;
 }
 
 button:active {

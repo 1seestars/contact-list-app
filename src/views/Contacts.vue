@@ -18,8 +18,8 @@
 
 <script>
 import { mapGetters } from "vuex";
-import ContactList from "@/components/ContactList";
-import AddContact from "@/components/AddContact";
+import ContactList from "@/components/contacts/ContactList";
+import AddContact from "@/components/contacts/AddContact";
 export default {
   name: "Contacts",
   computed: mapGetters(["contactsCount"]),

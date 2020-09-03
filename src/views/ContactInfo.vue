@@ -50,7 +50,6 @@ export default {
       );
     },
     actualFields() {
-      console.log(this.getCurrentContactHistory);
       return this.getCurrentContactHistory[
         this.getCurrentContactHistory.length - 1
       ];

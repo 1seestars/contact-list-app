@@ -12,11 +12,12 @@ export default {
         (item) => item.id === newField.parentId
       );
 
-      const fields = state.contacts[contactIndex].fields;
+      state.contacts[contactIndex].fields.push(newField);
 
-      fields.push(newField);
-
-      this.commit("setContactFieldsToHistory", fields);
+      this.commit(
+        "setContactFieldsToHistory",
+        state.contacts[contactIndex].fields
+      );
     },
     removeField(state, { fieldId, parentId }) {
       const contactIndex = state.contacts.findIndex(
@@ -55,15 +56,15 @@ export default {
       );
     },
     cancelLastAction(state, parentId) {
-      const history = state.currentContactHistory;
-
-      history.pop();
+      state.currentContactHistory.pop();
 
       const contactIndex = state.contacts.findIndex(
         (item) => item.id === parentId
       );
 
-      state.contacts[contactIndex].fields = history[history.length - 1];
+      state.contacts[contactIndex].fields = [
+        ...state.currentContactHistory[state.currentContactHistory.length - 1],
+      ];
     },
     setContactFieldsToHistory(state, fields) {
       state.currentContactHistory = [

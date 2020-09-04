@@ -93,12 +93,10 @@ li span span:hover {
 #imageDiv {
   width: 100px;
   height: 100px;
-  /* background: #a4d9f4; */
   text-align: center;
   line-height: 100px;
   font-size: 30px;
   border-radius: 50%;
-  /* color: #0084c1; */
   text-decoration: none;
 }
 

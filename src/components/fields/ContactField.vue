@@ -96,7 +96,7 @@ button {
   font-size: 13px;
   cursor: pointer;
   box-shadow: 5px 10px 10px 0px rgba(159, 201, 215, 0.5);
-  transition: 0.5s;
+  transition: 0.3s;
   outline: none;
   opacity: 0.85;
 }

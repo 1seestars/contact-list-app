@@ -8,7 +8,9 @@
           </button>
         </router-link>
         <button
-          v-bind:class="{ done: disableActionCancelButton }"
+          v-bind:class="{
+            done: disableActionCancelButton || !!getCurrentChangeField.title,
+          }"
           @click="cancelLastAction($route.params.id)"
           id="undoButton"
         >
@@ -23,13 +25,13 @@
     <div v-if="currentContact">
       <div id="contactInfoBlock">
         <span
-          ><strong>{{ currentContact.name }}</strong
+          ><strong>{{ name }}</strong
           >'s info
         </span>
       </div>
       <div id="contactNumber">
         <div>number</div>
-        <div>{{ currentContact.number }}</div>
+        <div class="fieldsInfoValue">{{ currentContact.number }}</div>
       </div>
       <ul>
         <ContactField
@@ -50,10 +52,20 @@ import ContactField from "@/components/fields/ContactField";
 export default {
   name: "ContactInfo",
   computed: {
-    ...mapGetters(["getAllContacts", "getCurrentContactHistory"]),
+    ...mapGetters([
+      "getAllContacts",
+      "getCurrentChangeField",
+      "getCurrentContactHistory",
+    ]),
     currentContact() {
       return this.getAllContacts.find(
         (item) => item.id === this.$route.params.id
+      );
+    },
+    name() {
+      return (
+        this.currentContact.name[0].toUpperCase() +
+        this.currentContact.name.slice(1)
       );
     },
     actualFields() {
@@ -69,9 +81,16 @@ export default {
       }
     },
   },
-  methods: mapMutations(["cancelLastAction", "inititalizeHistory"]),
+  methods: mapMutations([
+    "cancelLastAction",
+    "inititalizeHistory",
+    "clearFieldToChange",
+  ]),
   mounted() {
     this.inititalizeHistory(this.$route.params.id);
+  },
+  destroyed() {
+    this.clearFieldToChange();
   },
   components: {
     AddField,
@@ -84,12 +103,12 @@ export default {
 #contactInfoHeader {
   display: flex;
   position: sticky;
-  top: 0;
+  top: -20px;
   border-radius: 10px;
   background: white;
   background: linear-gradient(
     0deg,
-    rgba(2, 0, 36, 0) 0%,
+    rgba(255, 255, 255, 0) 0%,
     rgba(255, 255, 255, 0.5032387955182073) 10%,
     rgba(255, 255, 255, 1) 20%
   );
@@ -196,5 +215,9 @@ button:focus {
 #contactNumber div {
   flex-basis: 25%;
   font-weight: 700;
+}
+
+.fieldsInfoValue {
+  font-style: italic;
 }
 </style>

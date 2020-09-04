@@ -34,12 +34,12 @@ export default {
 #contactListHeader {
   display: flex;
   position: sticky;
-  top: 0;
+  top: -20px;
   border-radius: 10px;
   background: white;
   background: linear-gradient(
     0deg,
-    rgba(2, 0, 36, 0) 0%,
+    rgba(255, 255, 255, 0) 0%,
     rgba(255, 255, 255, 0.5032387955182073) 10%,
     rgba(255, 255, 255, 1) 20%
   );

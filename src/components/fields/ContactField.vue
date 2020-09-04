@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <li v-bind:class="{ changing: !!getCurrentChangeField.title }">
     <div class="fieldsInfo">
       <span>
         {{ field.title }}
@@ -16,10 +16,17 @@
           setFieldToChange({ fieldId: field.id, parentId: field.parentId })
         "
         id="changeButton"
+        v-bind:disabled="!!getCurrentChangeField.title"
+        v-bind:class="{ changing: !!getCurrentChangeField.title }"
       >
         Change
       </button>
-      <button @click="removeChoosenField" id="deleteButton">
+      <button
+        @click="removeChoosenField"
+        id="deleteButton"
+        v-bind:disabled="!!getCurrentChangeField.title"
+        v-bind:class="{ changing: !!getCurrentChangeField.title }"
+      >
         Delete
       </button>
     </div>
@@ -27,7 +34,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   props: {
     field: {
@@ -35,6 +42,7 @@ export default {
       required: true,
     },
   },
+  computed: mapGetters(["getCurrentChangeField"]),
   methods: {
     ...mapMutations(["removeField", "setFieldToChange"]),
     removeChoosenField() {
@@ -53,6 +61,11 @@ export default {
 li {
   display: flex;
   padding: 1vw 3vw;
+}
+
+.changing {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .fieldsInfo {

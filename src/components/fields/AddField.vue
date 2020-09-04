@@ -110,21 +110,21 @@ button {
   border-radius: 5px;
   width: 100px;
   height: 40px;
-  background: #9fc9d7;
+  background: #89c4d8;
   color: white;
   font-weight: 700;
   font-size: 16px;
   margin: 0 0 0 20px;
   cursor: pointer;
-  box-shadow: 5px 10px 10px 0px rgba(159, 201, 215, 0.7);
-  transition: 0.5s;
+  box-shadow: 5px 10px 10px 0px rgba(137, 196, 216, 0.5);
+  transition: 0.3s;
   outline: none;
   opacity: 0.85;
 }
 
 button:active {
   transform: scale(0.9);
-  box-shadow: 2px 4px 1px 0px rgba(159, 201, 215, 0.7);
+  box-shadow: 2px 4px 1px 0px rgba(137, 196, 216, 0.5);
 }
 
 button:hover {

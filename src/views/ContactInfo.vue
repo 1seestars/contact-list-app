@@ -20,10 +20,17 @@
       </div>
     </div>
     <hr />
-
     <div v-if="currentContact">
-      {{ currentContact.name }}<br />
-      {{ currentContact.number }}
+      <div id="contactInfoBlock">
+        <span
+          ><strong>{{ currentContact.name }}</strong
+          >'s info
+        </span>
+      </div>
+      <div id="contactNumber">
+        <div>number</div>
+        <div>{{ currentContact.number }}</div>
+      </div>
       <ul>
         <ContactField
           v-for="field of actualFields"
@@ -32,7 +39,7 @@
         />
       </ul>
     </div>
-    <div v-else><p>No such contact!</p></div>
+    <span class="noItemsSign" v-else>No such contact!</span>
   </div>
 </template>
 
@@ -76,6 +83,17 @@ export default {
 <style scoped>
 #contactInfoHeader {
   display: flex;
+  position: sticky;
+  top: 0;
+  border-radius: 10px;
+  background: white;
+  background: linear-gradient(
+    0deg,
+    rgba(2, 0, 36, 0) 0%,
+    rgba(255, 255, 255, 0.5032387955182073) 10%,
+    rgba(255, 255, 255, 1) 20%
+  );
+  z-index: 10;
 }
 
 #contactInfoHeader div {
@@ -118,35 +136,35 @@ button {
   font-weight: 700;
   font-size: 16px;
   cursor: pointer;
-  box-shadow: 5px 10px 10px 0px rgba(159, 201, 215, 0.7);
+  box-shadow: 5px 10px 10px 0px rgba(159, 201, 215, 0.5);
   transition: 0.5s;
   outline: none;
   opacity: 0.85;
 }
 
 #backButton {
-  background: #edd1ef;
-  box-shadow: 5px 10px 10px 0px rgba(237, 209, 239, 0.7);
+  background: #ebbfee;
+  box-shadow: 5px 10px 10px 0px rgba(235, 191, 238, 0.5);
 }
 
 #backButton:active {
-  box-shadow: 2px 4px 1px 0px rgba(237, 209, 239, 0.7);
+  box-shadow: 2px 4px 1px 0px rgba(235, 191, 238, 0.5);
 }
 
 #undoButton {
   margin-left: 20px;
   background: #f45d5d;
-  box-shadow: 5px 10px 10px 0px rgba(244, 93, 93, 0.7);
+  box-shadow: 5px 10px 10px 0px rgba(244, 93, 93, 0.5);
 }
 
 #undoButton:active {
   background: #f45d5d;
-  box-shadow: 2px 4px 1px 0px rgba(244, 93, 93, 0.7);
+  box-shadow: 2px 4px 1px 0px rgba(244, 93, 93, 0.5);
 }
 
 button:active {
   transform: scale(0.9);
-  box-shadow: 2px 4px 1px 0px rgba(159, 201, 215, 0.7);
+  box-shadow: 2px 4px 1px 0px rgba(159, 201, 215, 0.5);
 }
 
 button:hover {
@@ -157,8 +175,26 @@ button:focus {
   opacity: 1;
 }
 
-p {
+.noItemsSign {
+  display: inline-block;
+  margin: 0.7vw 0;
   color: #666666;
   font-weight: 500;
+}
+
+#contactInfoBlock {
+  margin: 0.7vw 0;
+  font-size: 20px;
+}
+
+#contactNumber {
+  display: flex;
+  text-align: left;
+  padding: 1vw 3vw;
+}
+
+#contactNumber div {
+  flex-basis: 25%;
+  font-weight: 700;
 }
 </style>

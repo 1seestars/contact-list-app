@@ -11,7 +11,7 @@
     <hr />
     <div>
       <ContactList v-if="contactsCount" />
-      <p v-else>No contacts!</p>
+      <span class="noItemsSign" v-else>No contacts!</span>
     </div>
   </div>
 </template>
@@ -33,6 +33,17 @@ export default {
 <style scoped>
 #contactListHeader {
   display: flex;
+  position: sticky;
+  top: 0;
+  border-radius: 10px;
+  background: white;
+  background: linear-gradient(
+    0deg,
+    rgba(2, 0, 36, 0) 0%,
+    rgba(255, 255, 255, 0.5032387955182073) 10%,
+    rgba(255, 255, 255, 1) 20%
+  );
+  z-index: 10;
 }
 
 #contactListHeader div {
@@ -68,7 +79,9 @@ hr {
   margin: 0 3vw 2vw;
 }
 
-p {
+.noItemsSign {
+  display: inline-block;
+  margin: 0.7vw 0;
   color: #666666;
   font-weight: 500;
 }

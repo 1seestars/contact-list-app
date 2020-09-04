@@ -3,7 +3,7 @@
     <li>
       <div id="imageContainer">
         <router-link :to="{ name: 'ContactInfo', params: { id: contact.id } }">
-          <div id="imageDiv">
+          <div id="imageDiv" :style="classObject">
             <span>{{ capitalLetter }}</span>
           </div>
         </router-link>
@@ -35,6 +35,18 @@ export default {
     },
   },
   computed: {
+    classObject() {
+      const x = Math.floor(Math.random() * 256);
+      const y = Math.floor(Math.random() * 256);
+      const z = Math.floor(Math.random() * 256);
+      const bgColor = "rgba(" + x + "," + y + "," + z + ",0.1)";
+      const color = "rgba(" + x + "," + y + "," + z + ",0.7)";
+
+      return {
+        background: bgColor,
+        color,
+      };
+    },
     name() {
       return this.contact.name[0].toUpperCase() + this.contact.name.slice(1);
     },
@@ -81,16 +93,12 @@ li span span:hover {
 #imageDiv {
   width: 100px;
   height: 100px;
-  background: #a4d9f4;
+  /* background: #a4d9f4; */
   text-align: center;
   line-height: 100px;
   font-size: 30px;
   border-radius: 50%;
-  opacity: 0.5;
-  color: #0084c1;
-}
-
-#imageDiv {
+  /* color: #0084c1; */
   text-decoration: none;
 }
 
@@ -103,23 +111,23 @@ li span span:hover {
 #buttonContainer button {
   border: none;
   border-radius: 5px;
-  width: 100px;
-  height: 40px;
+  width: 80px;
+  height: 32px;
   background: #f45d5d;
   color: white;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 13px;
   margin: 0 0 0 20px;
   cursor: pointer;
-  box-shadow: 5px 10px 10px 0px rgba(244, 93, 93, 0.7);
-  transition: 0.5s;
+  box-shadow: 5px 10px 10px 0px rgba(244, 93, 93, 0.5);
+  transition: 0.3s;
   outline: none;
   opacity: 0.7;
 }
 
 #buttonContainer button:active {
   transform: scale(0.9);
-  box-shadow: 2px 4px 1px 0px rgba(244, 93, 93, 0.7);
+  box-shadow: 2px 4px 1px 0px rgba(244, 93, 93, 0.5);
 }
 
 #buttonContainer button:hover {
@@ -136,7 +144,7 @@ hr {
 }
 
 li:hover {
-  background: rgb(236, 236, 236);
+  background: rgb(247, 247, 247);
 }
 
 #shortInfo {

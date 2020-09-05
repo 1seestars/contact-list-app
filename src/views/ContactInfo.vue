@@ -30,8 +30,9 @@
         </span>
       </div>
       <div id="contactNumber">
-        <div>number</div>
-        <div class="fieldsInfoValue">{{ currentContact.number }}</div>
+        <span id="numberSign">number</span>
+        <span class="fieldsInfoValue">{{ currentContact.number }}</span>
+        <div id="rightSpace"></div>
       </div>
       <ul>
         <ContactField
@@ -57,6 +58,7 @@ export default {
       "getCurrentChangeField",
       "getCurrentContactHistory",
     ]),
+    // defining contact we have to show on screen
     currentContact() {
       return this.getAllContacts.find(
         (item) => item.id === this.$route.params.id
@@ -73,6 +75,7 @@ export default {
         this.getCurrentContactHistory.length - 1
       ];
     },
+    // if "history" has less than 1 array, we have to block ability to undo last actions
     disableActionCancelButton() {
       if (!this.getCurrentContactHistory[1]) {
         return true;
@@ -86,9 +89,11 @@ export default {
     "inititalizeHistory",
     "clearFieldToChange",
   ]),
+  // after component mounted we push to history current fields - this is our start point 
   mounted() {
     this.inititalizeHistory(this.$route.params.id);
   },
+  // in case we want to leave this component, we need to clear our buffer
   destroyed() {
     this.clearFieldToChange();
   },
@@ -159,6 +164,7 @@ button {
   transition: 0.3s;
   outline: none;
   opacity: 0.85;
+  text-decoration: none;
 }
 
 #backButton {
@@ -202,8 +208,10 @@ button:focus {
 }
 
 #contactInfoBlock {
-  margin: 0.7vw 0;
+  margin: 0.7vw auto;
   font-size: 20px;
+  max-width: 80vw;
+  word-wrap: break-word;
 }
 
 #contactNumber {
@@ -212,12 +220,64 @@ button:focus {
   padding: 1vw 3vw;
 }
 
-#contactNumber div {
-  flex-basis: 25%;
+#contactNumber span {
+  flex: 1;
+  display: block;
+  max-width: 27.9vw;
+  word-wrap: break-word;
   font-weight: 700;
+}
+
+#rightSpace {
+  flex: 1;
 }
 
 .fieldsInfoValue {
   font-style: italic;
+}
+
+@media (max-width: 830px) {
+  #contactInfoHeader {
+    display: block;
+    top: 0px;
+    background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.5032387955182073) 5%,
+      rgba(255, 255, 255, 1) 10%
+    );
+  }
+
+  button {
+    width: 80px;
+    height: 32px;
+    font-size: 15px;
+    box-shadow: none !important;
+    text-decoration: none;
+  }
+  #numberSign {
+    min-width: 29.5vw;
+  }
+  #contactInfoHeader {
+    display: block;
+  }
+
+  #addNewField {
+    text-align: center;
+  }
+
+  #contactNumber {
+    margin: 50px 0 15px;
+  }
+
+  #contactNumber span {
+    font-size: 16px;
+    max-width: 33.95vw;
+    padding-right: 8vw;
+  }
+
+  #rightSpace {
+    max-width: 60px;
+  }
 }
 </style>

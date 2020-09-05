@@ -35,6 +35,7 @@ export default {
     },
   },
   computed: {
+    // avatar color generator
     classObject() {
       const x = Math.floor(Math.random() * 256);
       const y = Math.floor(Math.random() * 256);
@@ -47,6 +48,7 @@ export default {
         color,
       };
     },
+    // name and number of contact
     name() {
       return this.contact.name[0].toUpperCase() + this.contact.name.slice(1);
     },
@@ -59,6 +61,7 @@ export default {
   },
   methods: {
     ...mapMutations(["removeContact"]),
+    // deleting contact
     removeCurrentContact() {
       if (confirm("Are you shure?")) {
         this.removeContact(this.contact.id);
@@ -73,6 +76,8 @@ li {
   display: flex;
   padding: 1vw 3vw;
   font-weight: 700;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 li span {
@@ -88,6 +93,8 @@ li span span:hover {
 #imageContainer {
   flex: 1;
   text-align: left;
+  max-width: 100px;
+  margin-right: 100px;
 }
 
 #imageDiv {
@@ -104,6 +111,7 @@ li span span:hover {
   flex: 3;
   text-align: right;
   line-height: 100px;
+  min-width: 72px;
 }
 
 #buttonContainer button {
@@ -152,6 +160,8 @@ li:hover {
 
 #shortInfo span {
   display: block;
+  word-wrap: break-word;
+  max-width: 45vw;
 }
 
 #contactName {
@@ -166,5 +176,39 @@ li:hover {
 
 #link {
   text-decoration: none;
+}
+
+@media (max-width: 830px) {
+  #imageDiv {
+    width: 70px;
+    height: 70px;
+    font-size: 20px;
+    line-height: 70px;
+  }
+
+  #buttonContainer {
+    line-height: 70px;
+  }
+
+  #buttonContainer button {
+    width: 60px;
+    height: 24px;
+    font-size: 10px;
+    box-shadow: none;
+  }
+
+  #shortInfo {
+    margin: 0 20px;
+  }
+
+  #shortInfo span {
+    font-size: 16px;
+    max-width: 38vw;
+  }
+
+  #imageContainer {
+    max-width: 70px;
+    margin: 0;
+  }
 }
 </style>

@@ -1,7 +1,9 @@
 <template>
   <form @submit.prevent="submit">
-    <input type="text" placeholder="Name" v-model="name" required />
-    <input type="number" placeholder="Number" v-model="number" required />
+    <div class="headerInputs">
+      <input type="text" placeholder="Name" v-model="name" required />
+      <input type="number" placeholder="Number" v-model="number" required />
+    </div>
     <button type="submit">Create</button>
   </form>
 </template>
@@ -10,6 +12,7 @@
 const uniqid = require("uniqid");
 import { mapMutations } from "vuex";
 export default {
+  // here we accumulate data from inputs
   data() {
     return {
       name: "",
@@ -18,6 +21,7 @@ export default {
   },
   methods: {
     ...mapMutations(["createNewContact"]),
+    // creating new contact with data user entered
     submit() {
       if (this.name.trim() && this.number.trim()) {
         this.createNewContact({
@@ -69,6 +73,10 @@ button {
   opacity: 0.85;
 }
 
+.headerInputs {
+  display: inline-block;
+}
+
 button:active {
   transform: scale(0.9);
   box-shadow: 2px 4px 1px 0px rgba(137, 196, 216, 0.5);
@@ -80,5 +88,22 @@ button:hover {
 
 button:focus {
   opacity: 1;
+}
+
+@media (max-width: 830px) {
+  input {
+    width: 70%;
+    height: 24px;
+    margin: 1vw;
+  }
+
+  button {
+    display: block;
+    width: 80px;
+    height: 32px;
+    font-size: 15px;
+    margin: 1vw auto;
+    box-shadow: none;
+  }
 }
 </style>

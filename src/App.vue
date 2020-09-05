@@ -8,6 +8,7 @@
 body {
   background: #dde9ee;
 }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -19,5 +20,11 @@ body {
   border-radius: 10px;
   box-sizing: border-box;
   padding-bottom: 2vw;
+}
+
+@media (max-width: 830px) {
+  #app {
+    margin: 0;
+  }
 }
 </style>

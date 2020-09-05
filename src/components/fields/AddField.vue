@@ -1,7 +1,9 @@
 <template>
   <form @submit.prevent="submit">
-    <input type="text" v-model="title" placeholder="Title" />
-    <input type="text" v-model="value" placeholder="Value" />
+    <div class="headerInputs">
+      <input type="text" v-model="title" placeholder="Title" />
+      <input type="text" v-model="value" placeholder="Value" />
+    </div>
     <button type="submit">{{ buttonTag }}</button>
   </form>
 </template>
@@ -10,6 +12,7 @@
 const uniqid = require("uniqid");
 import { mapGetters, mapMutations } from "vuex";
 export default {
+  // data from inputs
   data() {
     return {
       title: "",
@@ -30,6 +33,7 @@ export default {
   },
   computed: {
     ...mapGetters(["getAllContacts", "getCurrentChangeField"]),
+    // defining, what the button current tag
     buttonTag() {
       if (this.getCurrentChangeField.title) {
         return "Change";
@@ -40,6 +44,7 @@ export default {
   },
   methods: {
     ...mapMutations(["createNewField", "changeField", "clearFieldToChange"]),
+    // change current field if user entered new values and accepted change
     changeCurrentField(changedField) {
       const contactIndex = this.getAllContacts.findIndex(
         (item) => item.id === changedField.parentId
@@ -63,9 +68,10 @@ export default {
           });
         }
       }
-
+      // clear our "buffer" after acceptance
       this.clearFieldToChange();
     },
+    // if buffer not empty we have to change field with buffer's values, in another case we create new field by this action
     submit() {
       if (
         this.getCurrentChangeField.title &&
@@ -96,7 +102,7 @@ export default {
 <style scoped>
 input {
   height: 32px;
-  margin: 0 5px;
+  margin: 0 0 0 10px;
   font-size: 16px;
   transition: 0.5s;
   color: #777777;
@@ -133,5 +139,26 @@ button:hover {
 
 button:focus {
   opacity: 1;
+}
+
+.headerInputs {
+  display: inline-block;
+}
+
+@media (max-width: 830px) {
+  input {
+    width: 70%;
+    height: 24px;
+    margin: 1vw;
+  }
+
+  button {
+    display: block;
+    width: 80px;
+    height: 32px;
+    font-size: 15px;
+    margin: 1vw auto;
+    box-shadow: none;
+  }
 }
 </style>

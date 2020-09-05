@@ -45,6 +45,7 @@ export default {
   computed: mapGetters(["getCurrentChangeField"]),
   methods: {
     ...mapMutations(["removeField", "setFieldToChange"]),
+    // deleting choosen field
     removeChoosenField() {
       if (confirm("Are you shure?")) {
         this.removeField({
@@ -61,6 +62,7 @@ export default {
 li {
   display: flex;
   padding: 1vw 3vw;
+  align-items: center;
 }
 
 .changing {
@@ -81,7 +83,7 @@ li {
 }
 
 #fieldsActionButtons {
-  flex: 2;
+  flex: 1;
   text-align: right;
 }
 
@@ -90,7 +92,6 @@ button {
   border-radius: 5px;
   width: 80px;
   height: 32px;
-  background: #9fc9d7;
   color: white;
   font-weight: 700;
   font-size: 13px;
@@ -132,5 +133,50 @@ button:hover {
 
 button:focus {
   opacity: 1;
+}
+
+.fieldsInfo span {
+  display: block;
+  word-wrap: break-word;
+  max-width: 26vw;
+}
+
+@media (max-width: 830px) {
+  #fieldsActionButtons {
+    max-width: 60px;
+  }
+
+  #fieldsActionButtons button {
+    display: inline-block;
+    width: 60px;
+    height: 24px;
+    font-size: 10px;
+    box-shadow: none;
+  }
+
+  #deleteButton {
+    margin: 5px 0 0;
+    background: #f45d5d;
+    box-shadow: 5px 10px 10px 0px rgba(244, 93, 93, 0.5);
+  }
+
+  #shortInfo {
+    margin: 0 20px;
+  }
+
+  #shortInfo span {
+    font-size: 16px;
+    max-width: 38vw;
+  }
+
+  #imageContainer {
+    max-width: 70px;
+    margin: 0;
+  }
+
+  .fieldsInfo span {
+    font-size: 16px;
+    max-width: 35vw;
+  }
 }
 </style>

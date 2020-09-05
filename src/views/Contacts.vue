@@ -32,6 +32,7 @@ export default {
 
 <style scoped>
 #contactListHeader {
+  box-sizing: border-box;
   display: flex;
   position: sticky;
   top: -20px;
@@ -84,5 +85,27 @@ hr {
   margin: 0.7vw 0;
   color: #666666;
   font-weight: 500;
+}
+
+@media (max-width: 830px) {
+  #contactListHeader {
+    display: block;
+    top: 0px;
+    background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.5032387955182073) 5%,
+      rgba(255, 255, 255, 1) 10%
+    );
+    text-align: center;
+  }
+
+  #contactsCount {
+    font-size: 16px;
+  }
+
+  #addNewContact {
+    text-align: center;
+  }
 }
 </style>
